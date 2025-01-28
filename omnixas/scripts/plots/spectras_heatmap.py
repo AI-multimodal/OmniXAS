@@ -11,13 +11,16 @@ from omnixas.data import Element, MLData, SpectrumType
 from omnixas.scripts.plots.constants import FEFFSplits, VASPSplits
 from omnixas.utils import DEFAULTFILEHANDLER, FileHandler
 from omnixas.utils.plots import plot_line_heatmap
-from scripts.plots.plot_all_spectras import MLDATAPlotter
+
+# from scripts.plots.plot_all_spectras import MLDATAPlotter
 from src.data.ml_data import DataQuery, load_xas_ml_data
 
 # %%
 
-FEFF_data = {k.value: v for k, v in FEFFSplits.items()}
-VASP_data = {k.value + "_VASP": v for k, v in VASPSplits.items()}
+FEFF_data = {k.value: v for k, v in FEFFSplits().items()}
+VASP_data = {k.value + "_VASP": v for k, v in VASPSplits().items()}
+
+# %%
 
 # %%
 
@@ -25,7 +28,7 @@ PLOT = "FEFF"  # FEFF or VASP
 
 FONTSIZE = 20
 DPI = 300
-INTERPOLATE = 1000  # or NONE or int (1000)
+INTERPOLATE = 1000  # or NONE or int (1000) None for debug
 # INTERPOLATE = None  # or NONE or int (1000)
 
 cmap = "tab10"
@@ -53,17 +56,24 @@ axs = [fig.add_subplot(grid[i, j]) for i in range(ROWS) for j in range(COLS)]
 #     fig.delaxes(axs[i])
 # axs = [ax for i, ax in enumerate(axs) if i not in remove_idx]
 
+colorbar = None  # placeholder for storing colorbar
 for ax, (c, data) in zip(axs, all_data.items()):
     print(f"Plotting {c}...")
     spectras = np.concatenate([data.train.y, data.val.y, data.test.y])
 
-    plot_line_heatmap(
+    colorbar = plot_line_heatmap(
         spectras,
         ax=ax,
         aspect="auto",
         interpolate=INTERPOLATE,
         cmap="jet",
     )
+
+    # add colorbar to axes
+    if PLOT == "VASP":
+        ax.figure.colorbar(colorbar, cax=ax.inset_axes([1.02, 0, 0.03, 1]))
+    else:
+        pass  # will be handled after loop
 
     # ax.patch.set_facecolor(compound_colors[c]) # set background color
     # ax.patch.set_alpha(0.2)
@@ -96,6 +106,16 @@ for ax, (c, data) in zip(axs, all_data.items()):
 
     ax.set_yticks([])
 
+if PLOT == "FEFF":
+    # cax = fig.add_axes([0.92, 0.25, 0.02, 0.5])  # Adjust these values as needed
+    cax = fig.add_axes([0.92, 0.25, 0.01, 0.5])
+    cbar = plt.colorbar(
+        colorbar,
+        cax=cax,
+        # label="Density",
+    )
+    cbar.ax.set_title("Density", y=1.02, fontsize=FONTSIZE * 0.8)
+    cax.yaxis.set_major_formatter(plt.LogFormatter(10, labelOnlyBase=True))
 
 range_values = range(len(axs)) if PLOT == "VASP" else range(4, len(axs))
 # for i in range(4, len(axs)):  # FEFF
