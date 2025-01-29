@@ -75,8 +75,6 @@ for ax, element in zip(axs.ravel(), ordered_elements):
             np.arange(pct_err.shape[1]),
             np.quantile(pct_err, quantiles[i], axis=0),
             np.quantile(pct_err, quantiles[-i - 1], axis=0),
-            # alpha=0.25 if quantiles[i] in [0.05, 0.095] else 0.5,
-            # color=colors[i],
             alpha=0.4 if quantiles[i] in [0.05, 0.095] else 0.9,
             color="gray",
         )
@@ -224,3 +222,71 @@ for ax, element in zip(axs.ravel(), ordered_elements):
 fig.suptitle("10,000x bootstrapped (250 samples) Error Distribution")
 axs[-1, -1].axis("off")
 plt.tight_layout()
+
+# %%
+
+FONTSIZE = 20
+apply_plot_theme(FONTSIZE)
+fig, axs = plt.subplots(
+    4,
+    2,
+    figsize=(16, 12),
+    sharex=True,
+    sharey=True,
+    gridspec_kw={"wspace": 0.1, "hspace": 0.2},
+)
+
+n_bootstraps = 500  # Number of bootstrap iterations
+sample_size = 250  # Size of each bootstrap sample
+# quantiles = [0.05, 0.25, 0.75, 0.95]
+quantiles = [0.05, 0.25, 0.75, 0.95]
+colors = ["C0", "C0"]
+
+ordered_elements = ["Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu"]
+for ax, element in zip(axs.ravel(), ordered_elements):
+    tag = ModelTag(
+        element=element,
+        type="FEFF",
+        feature="m3gnet",
+        name="tunedUniversalXAS",
+    )
+    y_pred = metrics[tag].predictions
+    y = metrics[tag].targets
+    pct_err = (y_pred - y) / y * 100
+
+    # Store quantiles for averaging
+    bootstrap_quantiles = []
+    for _ in range(n_bootstraps):
+        # Random sampling with replacement
+        indices = np.random.choice(pct_err.shape[0], size=sample_size)
+        bootstrap_sample = pct_err[indices]
+
+        # Calculate quantiles for this bootstrap sample
+        sample_quantiles = [np.quantile(bootstrap_sample, q, axis=0) for q in quantiles]
+        bootstrap_quantiles.append(sample_quantiles)
+
+    # Calculate mean quantiles across bootstrap samples
+    mean_quantiles = np.mean(bootstrap_quantiles, axis=0)
+
+    # Plot mean quantiles
+    ax.plot(np.median(pct_err, axis=0), color="black")
+    for i in [0, 1]:
+        ax.fill_between(
+            np.arange(pct_err.shape[1]),
+            mean_quantiles[i],
+            mean_quantiles[-i - 1],
+            alpha=0.4 if quantiles[i] in [0.05, 0.95] else 0.9,
+            color="gray",
+        )
+
+    ax.set_xlim(0, 140)
+    ax.set_ylim(-55, 55)
+    ax.set_yticks([-50, -25, 0, 25, 50])
+    ax.xaxis.grid(False)
+    ax.yaxis.grid(True)
+    ax.set_title(element)
+
+fig.suptitle("10,000x bootstrapped (250 samples) Quantile Plot")
+plt.tight_layout()
+
+# %%
