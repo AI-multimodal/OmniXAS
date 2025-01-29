@@ -1,7 +1,10 @@
 # %%
+import os
 import scienceplots
 from omnixas.scripts.plots.scripts import AllTunedMetrics
 from omnixas.model.trained_model import ModelTag, MeanModel
+
+from omnixas.scripts.plots.scripts import AllTunedModels
 
 from omnixas.utils.spectra_outliers import OutlierDetector
 from scipy.interpolate import interp1d
@@ -21,94 +24,8 @@ from omnixas.scripts.plots.constants import FEFFSplits, VASPSplits
 
 FEFF_data = {k.value: v for k, v in FEFFSplits().items()}
 VASP_data = {k.value + "_VASP": v for k, v in VASPSplits().items()}
-
-# %%
-
-idxs = (
-    {
-        "Ti": {
-            "FEFF": {
-                "mp-390": ("test", 275),  # anatase
-                "mp-1840": ("test", 366),  # brookite
-                "mp-2657": None,  # rutile
-            },
-            "VASP": {
-                "mp-390": ("train", 1641),
-                "mp-1840": ("val", 264),
-                "mp-2657": ("train", 1857),
-            },
-        }
-    },
-    {
-        "Cu": {
-            "FEFF": {
-                "mp-361": ("train", 948),  #
-            },
-            "VASP": {
-                "mp-361": None,
-            },
-        }
-    },
-)
-
-# %%
-
-idx = 366
-split = FEFF_data["Ti"].test
-simulation = split.y[idx]
-plt.plot(simulation)
-
-# %%
-
-experiment = np.loadtxt(
-    "/Users/bnl/Downloads/response/experiment/Ti/brookite_mp-1840.dat"
-)
-plt.plot(experiment[:, 0], experiment[:, 1], label="full_experiment")
-plt.legend()
-plt.show()
-
-
-# %%
-
-# interpolate experimental to same as simulation grid
-
-
-experiment_energy = experiment[:, 0] + 1.25
-# experiment_energy += 1
-experiment_spectra = experiment[:, 1]
-f = interp1d(
-    experiment_energy,
-    experiment_spectra,
-    kind="cubic",
-    bounds_error=False,
-    fill_value=0,
-)
-
-
-simulation_grid = np.linspace(4964.50, 4964.50 + 35, 141)
-experiment_spectra_interp = f(simulation_grid)
-# scale experimental_spectra to be same max as simulation
-experiment_spectra_interp -= np.min(experiment_spectra_interp)
-experiment_spectra_interp *= np.max(simulation) / np.max(experiment_spectra_interp)
-
-
-# %%
-
-metrics = AllTunedMetrics()
-
-# %%
-
-tag = ModelTag(element="Ti", type="FEFF", feature="m3gnet", name="tunedUniversalXAS")
-prediction = metrics[tag].predictions[idx]
-
-
-# %%
-plt.style.use(["default", "science"])
-plt.s
-plt.plot(simulation_grid, experiment_spectra_interp, label="experiment")
-plt.plot(simulation_grid, simulation, label="simulation")
-plt.legend()
-plt.show()
+# tuned_metrics = AllTunedMetrics()
+all_tuned_models = AllTunedModels()
 
 # %%
 
@@ -126,25 +43,123 @@ def apply_plot_theme(FONTSIZE=18):
     )
 
 
+simulation_data = [
+    # ("Ti", "FEFF", "mp-390", "test", 275, -1, 1, 1),  # anatase
+    ("Ti", "FEFF", "mp-1840", "test", 366, -1, 1, 1),  # brookite
+    # ("Ti", "FEFF", "mp-2657", None, None),  # rutile
+    ("Ti", "VASP", "mp-390", "train", 1641, 0, 1, 1),  # anatase
+    # ("Ti", "VASP", "mp-1840", "val", 264, 0, 1, 1),  # brookite
+    ("Ti", "VASP", "mp-2657", "train", 1857, 0, 1, 1),  # rutile
+    ("Cu", "FEFF", "mp-361", "train", 948, -3, 1, 1),  #
+    # ("Cu", "VASP", "mp-361", None, None),
+]
+
+simulation_energy_grid = {
+    "Ti": np.linspace(4964.50, 4964.50 + 35, 141),
+    "Cu": np.linspace(8983.173, 8983.173 + 35, 141),
+}
+
+
 plt.style.use(["default", "science"])
-apply_plot_theme(20)
-fig, ax = plt.subplots(2, 1, figsize=(8, 8), sharex=True, gridspec_kw={"hspace": 0.02})
-ax[0].plot(prediction, label="prediction", color="blue")
-ax[0].plot(simulation, label="simulation", color="green", linestyle="--")
-ax[0].legend(loc="upper left")
-ax[1].plot(prediction, label="prediction", color="blue")
-ax[1].plot(experiment_spectra_interp, label="experiment", color="red", linestyle="--")
-ax[1].legend(loc="upper left")
-ax[0].set_yticks([])
-ax[1].set_yticks([])
-ax[1].set_xticklabels(simulation_grid[::10].round(2))
-ax[1].set_xlabel(r"$E$ (eV)")
-# mp-1840": ("test", 366),  # brookite
-plt.suptitle(
-    r"TiO$_2$ mp-1840 (brookite)",
-    # location has to be bit closer to to
-    x=0.5,
-    y=0.925,
-)
-plt.savefig("comparision_TiO2_mp-1840.pdf", bbox_inches="tight", dpi=300)
+apply_plot_theme(18)
+fig, axs = plt.subplots(len(simulation_data), 1, figsize=(8, 12), sharex=True)
+for ax, data in zip(axs.flatten(), simulation_data):
+    (
+        element,
+        sim_type,
+        material_id,
+        split_name,
+        idx,
+        offset,
+        max_factor,
+        e_scale_factor,
+    ) = data
+
+    dataset = FEFF_data if sim_type == "FEFF" else VASP_data
+    element_name = element if sim_type == "FEFF" else element + "_VASP"
+    simulated_spectra = getattr(dataset[element_name], split_name).y[idx]
+
+    exp_directory = (
+        os.path.expanduser("~/Downloads/response/experiment") + f"/{element}"
+    )
+    files = [
+        file
+        for file in os.listdir(exp_directory)
+        if material_id in file and (".dat" in file or ".csv" in file)
+    ]
+    assert len(files) == 1
+    file = files[0]
+    if ".dat" in file:
+        experimental_data = np.loadtxt(os.path.join(exp_directory, file))
+    elif ".csv" in file:
+        import pandas as pd
+
+        experimental_data = pd.read_csv(os.path.join(exp_directory, file)).values
+
+    interpolation = interp1d(
+        experimental_data[:, 0],
+        experimental_data[:, 1],
+        kind="cubic",
+    )
+    experimental_spectra = interpolation(
+        (simulation_energy_grid[element] + offset) * e_scale_factor
+    )
+
+    tag = ModelTag(
+        element=element,
+        type=sim_type,
+        feature="m3gnet",
+        name="tunedUniversalXAS",
+    )
+
+    data = dataset[element_name]
+    feature = getattr(data, split_name).X[idx]
+    model = all_tuned_models[tag]
+    prediction = model.predict([feature * 1000])[0] / 1000
+
+    # # scale preditction to be same as experiment level
+    # prediction -= np.min(prediction)
+    # prediction *= np.max(simulated_spectra) / np.max(prediction)
+
+    # ax.twinx().plot(
+    #     experimental_spectra, label="experiment", color="red", linestyle="--"
+    # )
+
+    experimental_spectra -= np.min(experimental_spectra)
+    experimental_spectra *= np.max(simulated_spectra) / np.max(experimental_spectra)
+    experimental_spectra *= max_factor
+
+    mse_simulation = np.mean((simulated_spectra - prediction) ** 2)
+    mse_experiment = np.mean((experimental_spectra - prediction) ** 2)
+    ax.plot(
+        prediction,
+        label="prediction",
+        color="blue",
+        linestyle="-",
+    )
+    ax.plot(
+        experimental_spectra,
+        label=f"experiment, MSE vs pred={mse_experiment:.1e}",
+        color="red",
+        linestyle="--",
+    )
+    ax.plot(
+        simulated_spectra,
+        label=f"simulation, MSE vs pred={mse_simulation:.1e}",
+        color="green",
+    )
+    ax.set_title(
+        # f"{element} {material_id} {split_name} {sim_type}",
+        f"{element} {material_id} ",
+    )
+    ax.legend()
+    ax.set_xlim(0, 140)
+    xticks = ax.get_xticks()
+    xtick_labels = xticks * 0.25
+    ax.set_xticks(xticks)
+    ax.set_xticklabels(xtick_labels)
+    ax.set_xlabel(r"$\Delta$E (eV)")
 plt.tight_layout()
+plt.savefig("comparison_with_experiment.pdf", bbox_inches="tight", dpi=300)
+
+# %%
