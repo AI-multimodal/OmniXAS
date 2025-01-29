@@ -29,8 +29,6 @@ df_all = pd.read_csv(
 
 df_combined = pd.DataFrame()
 for tag in all_expert_metrics.keys():
-    if tag.type == "VASP":
-        continue
     for split in ["train", "test", "val"]:
         file_name = f"{directory}/{tag.element}_{tag.type}_{split}.txt"
         df = pd.read_csv(file_name, header=None)
@@ -101,50 +99,65 @@ def apply_plot_theme(FONTSIZE=12):
     )
 
 
-# DESC = "OCN_binned"
-# DESC = "OS"
-DESC = "CN"
 for DESC in ["OCN_binned", "OS", "CN"]:
-    MIN_COUNT = 5
+    MIN_COUNT = 10
     FONTSIZE = 20
-
-    filtered_df = df[(df["type"] == "FEFF") & (df["split"] == "test")]
-
-    # Get unique elements
-    elements = sorted(filtered_df["element"].unique())
-    desc_values = sorted(filtered_df[DESC].unique())
 
     apply_plot_theme(FONTSIZE)
     fig, axes = plt.subplots(
-        4,
-        4,
-        figsize=(14, 12),
-        # sharey=True,
+        2,
+        5,
+        figsize=(12, 6),
+        sharey=True,
         sharex=True,
-        gridspec_kw={"wspace": 0.2, "hspace": 0.1},
+        gridspec_kw={"wspace": 0.03, "hspace": 0.03},
     )
     axes = axes.ravel()
 
     cmap = "tab10"
-    ordered_elements = ["Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu"]
+
+    ordered_elements = {
+        "Ti": 0,
+        "V": 1,
+        "Cr": 2,
+        "Mn": 3,
+        "Fe": 5,
+        "Co": 6,
+        "Ni": 7,
+        "Cu": 8,
+        "Ti_VASP": 4,
+        "Cu_VASP": 9,
+    }
+
     compound_colors = plt.get_cmap(cmap)(
-        np.linspace(0, 1, len(df["element"].unique()) + 2)
+        # np.linspace(0, 1, len(df["element"].unique()) + 2)
+        np.linspace(0, 1, len(ordered_elements))
     )
     compound_colors = {c: compound_colors[i] for i, c in enumerate(ordered_elements)}
 
-    # Create subplot for each element
-    for idx, element in enumerate(ordered_elements):
+    for element, idx in ordered_elements.items():
         ax = axes[idx]
-        element_df = filtered_df[filtered_df["element"] == element]
+        sim_type = "VASP" if "VASP" in element else "FEFF"
+        element_name = element if "VASP" not in element else element.split("_")[0]
 
-        tag = ModelTag(element=element, type="FEFF", feature="m3gnet", name="expertXAS")
+        tag = ModelTag(
+            element=element_name,
+            type=sim_type,
+            feature="m3gnet",
+            name="expertXAS",
+        )
         mean_model = MeanModel(tag=tag)
         normalizer = mean_model.metrics.median_of_mse_per_spectra
 
         delta_etas = []
         valid_desc = []
 
-        for desc_value in desc_values:
+        element_df = df[
+            (df["element"] == element_name)
+            & (df["type"] == sim_type)
+            & (df["split"] == "test")
+        ]
+        for desc_value in element_df[DESC].unique():
             mask = element_df[DESC] == desc_value
             group = element_df[mask]
 
@@ -153,8 +166,10 @@ for DESC in ["OCN_binned", "OS", "CN"]:
                 tuned_median = group["tuned_mse"].median()
 
                 # baseline should be based on train mean in same categoy
-                train_group = df[df["type"] == "FEFF"][
-                    (df["element"] == element) & (df["split"] == "train")
+                train_group = df[
+                    (df["type"] == sim_type)
+                    & (df["element"] == element_name)
+                    & (df["split"] == "train")
                 ]
                 train_group = train_group[train_group[DESC] == desc_value]
                 spectras = train_group["spectras"].to_list()
@@ -165,11 +180,12 @@ for DESC in ["OCN_binned", "OS", "CN"]:
 
                 eta_expert = group_normalizer / expert_median
                 eta_tuned = group_normalizer / tuned_median
-                delta_eta = eta_tuned - eta_expert
 
-                # eta_expert = normalizer / expert_median
-                # eta_tuned = normalizer / tuned_median
                 # delta_eta = eta_tuned - eta_expert
+
+                delta_eta = (eta_tuned - eta_expert) / eta_expert * 100
+
+                # delta_eta = eta_expert
 
                 delta_etas.append(delta_eta)
                 valid_desc.append(desc_value)
@@ -185,36 +201,72 @@ for DESC in ["OCN_binned", "OS", "CN"]:
                     bar.set_color("lightcoral")
 
             ax.text(
-                0.05,
+                0.06,
                 0.95,
-                element,
+                element_name,
+                ha="left",
+                va="top",
                 transform=ax.transAxes,
-                fontsize=FONTSIZE,
+                fontsize=FONTSIZE * 1,
                 verticalalignment="top",
                 horizontalalignment="left",
                 bbox=dict(
                     facecolor=compound_colors[element], alpha=0.5, edgecolor="white"
                 ),
             )
+            # if vasp add small text below the text above writing "VASP"
+            if sim_type == "VASP":
+                ax.text(
+                    0.045,
+                    0.8,
+                    "VASP",
+                    ha="left",
+                    va="top",
+                    transform=ax.transAxes,
+                    fontsize=FONTSIZE * 0.5,
+                    verticalalignment="top",
+                    horizontalalignment="left",
+                    # bbox=dict(
+                    #     facecolor=compound_colors[element], alpha=0.5, edgecolor="white"
+                    # ),
+                )
 
             desc_label = DESC if DESC != "OCN_binned" else "OCN"
-            if idx >= 4:
+
+            ax.tick_params(
+                axis="both",
+                which="both",
+                right=False,
+                top=False,
+                left=True,
+                bottom=True,
+            )
+
+            if idx >= 5:
                 ax.set_xlabel(desc_label)
-                ax.tick_params(axis="x", labelbottom=True)
-            if idx in [0, 4]:
-                # ax.set_ylabel(r"$\eta_T - \eta_E$")
+                ax.set_xticks([2, 3, 4, 5, 6])
+                ax.set_xticklabels(["2", "3", "4", "5", "6"])
+                plt.setp(ax.get_xticklabels(), visible=True)  # Corrected method name
+            else:
+                plt.setp(
+                    ax.get_xticklabels(), visible=False
+                )  # Optionally hide labels for other subplots
+
+            if idx in [0, 5]:
                 ax.set_ylabel(
-                    r"$\eta^{(" + desc_label + ")}_T - \eta^{(" + desc_label + ")}_E$"
+                    r"$\tilde{\eta}^{(\scriptstyle " + desc_label + ")}\,[\%]$"
                 )
-            ax.grid(True, alpha=0.2)
+
+            ax.grid(
+                which="major",
+                axis="both",
+                color="gray",
+                linestyle="-",
+                linewidth=0.5,
+                alpha=0.2,
+            )
 
             ax.axhline(y=0, color="black", linestyle="-", alpha=0.3)
-            ax.set_ylim(None, ax.get_ylim()[1] * 1.35)
-
-            max_abs = max(abs(min(delta_etas)), abs(max(delta_etas)))
-
-    for idx in range(len(elements), 16):
-        axes[idx].remove()
 
     plt.tight_layout()
     plt.savefig(f"delta_eta_vs_{DESC}.pdf", dpi=300, bbox_inches="tight")
