@@ -45,6 +45,7 @@ pct_err = (y_pred - y) / y * 100
 
 
 FONTSIZE = 20
+apply_plot_theme(FONTSIZE)
 fig, axs = plt.subplots(
     4,
     2,
@@ -58,7 +59,7 @@ ordered_elements = ["Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu"]
 quantiles = [0.05, 0.25, 0.75, 0.95]
 colors = ["C0", "C0"]
 
-for ax, element in zip(axs.ravel(), ordered_elements):
+for ax_id, (ax, element) in enumerate(zip(axs.ravel(), ordered_elements)):
     tag = ModelTag(
         element=element,
         type="FEFF",
@@ -84,6 +85,16 @@ for ax, element in zip(axs.ravel(), ordered_elements):
     ax.xaxis.grid(False)
     ax.yaxis.grid(True)
     ax.set_title(element)
+
+    if ax_id in [6, 7]:
+        xticks = ax.get_xticks()
+        ax.set_xticklabels(np.round(xticks * 0.25, 2))
+        ax.set_xlabel(r"$\Delta$E (eV)")
+    if ax_id in [0, 2, 4, 6]:
+        ax.set_ylabel("Percent Error (\%)")
+plt.tight_layout()
+plt.savefig("Pecrent_error.pdf", bbox_inches="tight", dpi=300)
+
 
 # %%
 
@@ -280,11 +291,20 @@ for ax, element in zip(axs.ravel(), ordered_elements):
         )
 
     ax.set_xlim(0, 140)
+
+    xticks = ax.get_xticks()
+    xticks = xticks * 0.25
+    ax.set_xticks(xticks)
+    ax.set_xlabel(r"$\Delta$E (eV)")
+    ax.set_ylabel("Percent Error (%)")
+
     ax.set_ylim(-55, 55)
     ax.set_yticks([-50, -25, 0, 25, 50])
     ax.xaxis.grid(False)
     ax.yaxis.grid(True)
     ax.set_title(element)
+    ax.set_xlabel("Energy (eV)")
+    ax.set_ylabel("Percent Error (%)")
 
 fig.suptitle("10,000x bootstrapped (250 samples) Quantile Plot")
 plt.tight_layout()

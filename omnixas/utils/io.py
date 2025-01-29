@@ -160,7 +160,6 @@ class FileHandler:
 
 
 class DEFAULTFILEHANDLER:
-
     def __new__(cls):
         return FileHandler(
             config=OmegaConf.load("config/serialization.yaml").serialization,
@@ -171,14 +170,15 @@ class DEFAULTFILEHANDLER:
 # %%
 
 if __name__ == "__main__":
-
-    from omnixas.data import Element, ElementSpectrum, SpectrumType
+    from omnixas.data import Element, ElementSpectrum, SpectrumType, Material
     from omnixas.utils import DEFAULTFILEHANDLER
 
-    objects = DEFAULTFILEHANDLER.fetch_serialized_objects(
+    objects = DEFAULTFILEHANDLER().fetch_serialized_objects(
         ElementSpectrum, element=Element.Cu, type=SpectrumType.FEFF
     )
     objects = list(objects)
     print("Length:", len(objects))
 
 # %%
+file_handler = DEFAULTFILEHANDLER()
+# get

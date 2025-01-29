@@ -243,7 +243,7 @@ for DESC in ["OCN_binned", "OS", "CN"]:
             )
 
             if idx >= 5:
-                ax.set_xlabel(desc_label)
+                ax.set_xlabel(desc_label + r"$(x)$")
                 ax.set_xticks([2, 3, 4, 5, 6])
                 ax.set_xticklabels(["2", "3", "4", "5", "6"])
                 plt.setp(ax.get_xticklabels(), visible=True)  # Corrected method name
@@ -254,7 +254,8 @@ for DESC in ["OCN_binned", "OS", "CN"]:
 
             if idx in [0, 5]:
                 ax.set_ylabel(
-                    r"$\tilde{\eta}^{(\scriptstyle " + desc_label + ")}\,[\%]$"
+                    # r"$\tilde{\eta}^{(\scriptstyle " + desc_label + ")}\,[\%]$"
+                    r"$\tilde{\eta}^{(x)}\,[\%]$"
                 )
 
             ax.grid(
