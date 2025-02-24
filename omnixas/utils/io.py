@@ -9,6 +9,7 @@ from typing import Any, Dict, Iterator, List, Optional, Type, TypeVar, Union
 import yaml
 from omegaconf import OmegaConf
 from pydantic import BaseModel
+import omnixas
 
 # %%
 
@@ -162,7 +163,7 @@ class FileHandler:
 class DEFAULTFILEHANDLER:
     def __new__(cls):
         return FileHandler(
-            config=OmegaConf.load("config/serialization.yaml").serialization,
+            config=OmegaConf.load(omnixas.__path__[0].replace('omnixas',"config/serialization.yaml")).serialization,
             replace_existing=False,
         )
 

@@ -51,7 +51,7 @@ from matgl.utils.cutoff import polynomial_cutoff
 from omegaconf import DictConfig
 
 from omnixas.data.xas import MaterialStructure
-from omnixas.utils.constants import Element, SpectrumType
+from omnixas.core.periodic_table import Element, SpectrumType
 
 
 class M3GNetFeaturizer:

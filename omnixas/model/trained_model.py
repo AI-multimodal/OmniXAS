@@ -20,7 +20,8 @@ from omnixas.model.metrics import ModelMetrics, ModelTag
 from omnixas.model.training import PlModule
 from omnixas.model.xasblock import XASBlock
 from omnixas.utils.io import DEFAULTFILEHANDLER, FileHandler
-
+import omnixas
+import os
 
 class TrainedModel(BaseModel, ABC):
     tag: ModelTag
@@ -153,7 +154,7 @@ class TrainedModelLoader:
     @staticmethod
     def get_layer_widths(
         tag: ModelTag,
-        hparams: dict = OmegaConf.load("config/training/hparams.yaml").hparams,
+        hparams: dict = OmegaConf.load(omnixas.__path__[0].replace('omnixas',"config/training/hparams.yaml")).hparams,
         **kwargs,
     ):
         if tag.name != "tunedUniversalXAS":
