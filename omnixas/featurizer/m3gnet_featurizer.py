@@ -52,6 +52,7 @@ from omegaconf import DictConfig
 
 from omnixas.data.xas import MaterialStructure
 from omnixas.core.periodic_table import Element, SpectrumType
+import omnixas
 
 
 class M3GNetFeaturizer:
@@ -102,9 +103,11 @@ class M3GNetFeaturizer:
     @cache
     @staticmethod
     def _load_default_featurizer():
-        with open("config/paths.yaml") as f:
+        with open(omnixas.__path__[0].replace("omnixas","config/paths.yaml")) as f:
             paths = yaml.safe_load(f)
             path = DictConfig(paths).models.m3gnet
+        path = omnixas.__path__[0].replace("omnixas",path)
+        print(path, type(path))
         logger.info(f"Loading m3gnet model from {path}")
         model = load_model(path).model
         model.eval()
