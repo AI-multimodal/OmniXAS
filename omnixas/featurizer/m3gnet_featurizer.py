@@ -107,7 +107,6 @@ class M3GNetFeaturizer:
             paths = yaml.safe_load(f)
             path = DictConfig(paths).models.m3gnet
         path = omnixas.__path__[0].replace("omnixas",path)
-        print(path, type(path))
         logger.info(f"Loading m3gnet model from {path}")
         model = load_model(path).model
         model.eval()
