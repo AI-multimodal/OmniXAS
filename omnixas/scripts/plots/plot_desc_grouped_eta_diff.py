@@ -99,7 +99,25 @@ def apply_plot_theme(FONTSIZE=12):
     )
 
 
-for DESC in ["OCN_binned", "OS", "CN"]:
+df["MOOD_binned"] = (
+    (df["MOOD"] - df["MOOD"].min())
+    * df["OS"].max()
+    / (df["MOOD"].max() - df["MOOD"].min())
+)
+df["MOOD_binned"] = df["MOOD_binned"].apply(lambda x: round(x * 2) / 2)
+
+df["NNRS_binned"] = (
+    (df["NNRS"] - df["NNRS"].min())
+    * df["OS"].max()
+    / (df["NNRS"].max() - df["NNRS"].min())
+)
+df["NNRS_binned"] = df["NNRS_binned"].apply(lambda x: round(x * 2) / 2)
+
+
+# for DESC in ["OCN_binned", "OS", "CN"]:
+for DESC in ["OS", "CN"]:
+    # for DESC in ["OCN_binned"]:
+    # for DESC in ["MOOD_binned", "NNRS_binned"]:
     MIN_COUNT = 10
     FONTSIZE = 20
 
@@ -243,7 +261,9 @@ for DESC in ["OCN_binned", "OS", "CN"]:
             )
 
             if idx >= 5:
-                ax.set_xlabel(desc_label + r"$(x)$")
+                # ax.set_xlabel(desc_label + r"$(x)$")
+                if idx == 7:
+                    ax.set_xlabel(desc_label)
                 ax.set_xticks([2, 3, 4, 5, 6])
                 ax.set_xticklabels(["2", "3", "4", "5", "6"])
                 plt.setp(ax.get_xticklabels(), visible=True)  # Corrected method name
