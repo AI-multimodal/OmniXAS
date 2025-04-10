@@ -17,7 +17,6 @@ from omnixas.scripts.plots.scripts import (
 
 
 class DecilePlotter:
-
     @staticmethod
     def plot(
         metrics: Dict[ModelTag, ModelMetrics],
@@ -124,7 +123,7 @@ class DecilePlotter:
             if tag.type == "VASP":
                 title += " (VASP)"
             if etas is not None:
-                title += "\n" + r"$\bf{\eta=}$" + f"{etas[tag]:.1f}"
+                title += "\n" + r"$\bf{\eta=}$" + f"{etas[tag]:.2f}"
 
             ax_col[0].set_title(
                 title,
@@ -192,7 +191,6 @@ def plot_three():
     fig.savefig("three_deciles_tuned.pdf", dpi=300, bbox_inches="tight")
 
 
-# %%
 if __name__ == "__main__":
     main()
     # plot_three()
