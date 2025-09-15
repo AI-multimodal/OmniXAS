@@ -1,0 +1,30 @@
+mpot, nph, ntitle, ihole, ipr1, iafolp, ixc,ispec
+   1   3   8   1   0   0   0   1
+nmix, nohole, jumprm, inters, nscmt, icoul, lfms1, iunf
+   3   2   0   0 100   0   0   0
+comment: None given                                                             
+Source:                                                                         
+Structure Summary:  Ti1 Cu3 O4                                                  
+Reduced formula:  TiCu3O4                                                       
+space group: (P-3m1), space number:  (164)                                      
+abc: 11.278452  11.278452  10.626766                                            
+angles: 90.000000  90.000000 120.000000                                         
+sites: 8                                                                        
+gamach, rgrd, ca1, ecv, totvol, rfms1, corval_emin
+      1.72919      0.05000      0.20000    -40.00000      0.00000      7.00000    -70.00000
+ iz, lmaxsc, xnatph, xion, folp
+   29    2      1.00000      0.00000      1.15000
+   22    2    100.00000      0.00000      1.15000
+   29    2    300.00000      0.00000      1.15000
+    8    2    400.00000      0.00000      1.15000
+ExternalPot switch, StartFromFile switch
+ F F
+OVERLAP option: novr(iph)
+   0   0   0   0
+ iphovr  nnovr rovr 
+ChSh_Type:
+   0
+ConfigType:
+   1
+Temperature (in eV):
+  0.000000000000000E+000           1

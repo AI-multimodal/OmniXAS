@@ -1,0 +1,222 @@
+### feff starts at Mon Aug 14 02:41:29 EDT 2023
+### Serial version
+### FeffPath is /sdcc/u/mcarbone/software/JFEFF/hsw/feff90/linux
+ 
+Launching FEFF version FEFF 9.9.1
+Resetting lmaxsc to 2 for iph =    1.  Use  UNFREEZE to prevent this.
+Core hole lifetime is   1.729 eV.
+Your calculation:
+ comment: None given
+ Source:
+ Structure Summary:  Ta16 Cu8 O48
+ Reduced formula:  Ta2CuO6
+ space group: (Pmmm), space number:  (47)
+ abc:  7.573437   7.605069  15.194243
+ angles: 90.000000  90.000000  90.000000
+ sites: 72
+Cu K edge XANES using RPA corehole.
+Using:     * Self-Consistent Field potentials
+Using cards:   ATOMS CONTROL EXCHANGE TITLE RPATH POTENTIALS XANES EDGE SCF FMS S02 COREHOLE EGRID
+
+Calculating atomic potentials ...
+    overlapped atomic potential and density for unique potential    0
+    overlapped atomic potential and density for unique potential    1
+    overlapped atomic potential and density for unique potential    2
+    overlapped atomic potential and density for unique potential    3
+Done with module: atomic potentials.
+
+Calculating SCF potentials ...
+FEFF-serial using 1 thread.
+Muffin tin radii and interstitial parameters [bohr]:
+type, norman radius, muffin tin, overlap factor
+    0  1.33594E+00  1.26311E+00  1.15000E+00
+    1  1.46754E+00  1.31799E+00  1.15000E+00
+    2  1.33684E+00  1.26320E+00  1.15000E+00
+    3  1.08978E+00  1.01344E+00  1.15000E+00
+Core-valence separation energy:  ecv=   -33.000 eV
+Initial Fermi level:              mu=     3.331 eV
+SCF ITERATION NUMBER  1
+     point #   1  energy = -33.000
+FMS for a cluster of  130 atoms around atom type   0
+FMS for a cluster of  108 atoms around atom type   1
+FMS for a cluster of  109 atoms around atom type   2
+FMS for a cluster of  117 atoms around atom type   3
+     point #  20  energy = -21.889
+     point #  40  energy =  -6.598
+     point #  60  energy =  -4.617
+New Fermi level:    mu=  -4.587 eV  Charge distance=  1.1037 (partial c.d.=  4.9186)
+SCF ITERATION NUMBER  1
+     point #   1  energy = -33.000
+FMS for a cluster of  130 atoms around atom type   0
+FMS for a cluster of  108 atoms around atom type   1
+FMS for a cluster of  109 atoms around atom type   2
+FMS for a cluster of  117 atoms around atom type   3
+     point #  20  energy = -21.838
+     point #  40  energy =  -4.587
+     point #  60  energy =  -4.755
+     point #  80  energy =  -6.893
+     point # 100  energy =  -6.033
+     point # 120  energy =  -5.749
+New Fermi level:    mu=  -5.696 eV  Charge distance=  0.3780 (partial c.d.=  5.8144)
+SCF ITERATION NUMBER  1
+     point #   1  energy = -33.000
+FMS for a cluster of  130 atoms around atom type   0
+FMS for a cluster of  108 atoms around atom type   1
+FMS for a cluster of  109 atoms around atom type   2
+FMS for a cluster of  117 atoms around atom type   3
+     point #  20  energy = -21.876
+     point #  40  energy =  -5.696
+New Fermi level:    mu=  -5.713 eV  Charge distance=  0.1903 (partial c.d.=  0.3794)
+SCF ITERATION NUMBER  2
+     point #   1  energy = -33.000
+     point #  20  energy = -21.883
+     point #  40  energy =  -5.713
+     point #  60  energy =  -5.953
+     point #  80  energy =  -6.057
+New Fermi level:    mu=  -5.963 eV  Charge distance=  0.2638 (partial c.d.=  0.2998)
+SCF ITERATION NUMBER  3
+     point #   1  energy = -33.000
+     point #  20  energy = -21.985
+     point #  40  energy =  -5.963
+     point #  60  energy =  -6.144
+New Fermi level:    mu=  -6.142 eV  Charge distance=  0.2258 (partial c.d.=  1.1897)
+SCF ITERATION NUMBER  4
+     point #   1  energy = -33.000
+     point #  20  energy = -22.058
+     point #  40  energy =  -6.142
+New Fermi level:    mu=  -6.192 eV  Charge distance=  0.0806 (partial c.d.=  1.3808)
+SCF ITERATION NUMBER  5
+     point #   1  energy = -33.000
+     point #  20  energy = -21.658
+     point #  40  energy =  -6.192
+     point #  60  energy =  -6.305
+New Fermi level:    mu=  -6.304 eV  Charge distance=  0.1015 (partial c.d.=  0.0703)
+SCF ITERATION NUMBER  6
+     point #   1  energy = -33.000
+     point #  20  energy = -21.705
+     point #  40  energy =  -6.304
+New Fermi level:    mu=  -6.391 eV  Charge distance=  0.0141 (partial c.d.=  0.2612)
+SCF ITERATION NUMBER  7
+     point #   1  energy = -33.000
+     point #  20  energy = -21.742
+     point #  40  energy =  -6.391
+New Fermi level:    mu=  -6.377 eV  Charge distance=  0.0057 (partial c.d.=  0.0443)
+SCF ITERATION NUMBER  8
+     point #   1  energy = -33.000
+     point #  20  energy = -21.736
+     point #  40  energy =  -6.377
+New Fermi level:    mu=  -6.370 eV  Charge distance=  0.0095 (partial c.d.=  0.0103)
+SCF ITERATION NUMBER  9
+     point #   1  energy = -33.000
+     point #  20  energy = -21.733
+     point #  40  energy =  -6.370
+New Fermi level:    mu=  -6.363 eV  Charge distance=  0.0049 (partial c.d.=  0.0072)
+SCF ITERATION NUMBER 10
+     point #   1  energy = -33.000
+     point #  20  energy = -21.730
+     point #  40  energy =  -6.363
+New Fermi level:    mu=  -6.359 eV  Charge distance=  0.0006 (partial c.d.=  0.0057)
+SCF ITERATION NUMBER 11
+     point #   1  energy = -33.000
+     point #  20  energy = -21.729
+     point #  40  energy =  -6.359
+New Fermi level:    mu=  -6.360 eV  Charge distance=  0.0000 (partial c.d.=  0.0007)
+SCF ITERATION NUMBER 12
+     point #   1  energy = -33.000
+     point #  20  energy = -21.729
+     point #  40  energy =  -6.360
+New Fermi level:    mu=  -6.360 eV  Charge distance=  0.0003 (partial c.d.=  0.0001)
+Electronic configuration
+  type     l     N_el
+     0     0    0.486
+     0     1    0.553
+     0     2    9.596
+     0     3    0.000
+     1     0    0.542
+     1     1    0.880
+     1     2    2.778
+     1     3    0.000
+     2     0    0.494
+     2     1    0.554
+     2     2    9.588
+     2     3    0.000
+     3     0    1.822
+     3     1    4.440
+     3     2    0.065
+     3     3    0.000
+Charge transfer:  type  charge
+       0   -0.365
+       1   -0.801
+       2   -0.364
+       3    0.328
+Convergence reached in   12 iterations.
+Done with module: potentials.
+
+Calculating screened core-hole potential ...
+FMS for a cluster of   22 atoms around iph =   0
+    0% of energy integration
+   20%
+   40%
+   60%
+   80%
+  100%
+Preparing response function.
+Computing (1 - K Chi0)^-1 v_ch
+Done with module: screened core-hole potential.
+
+Calculating cross-section and phases ...
+    absorption cross section
+ x0,dx,rnrm,inrm,jnrm   8.80000000000000       5.000000000000000E-002
+   2.52456715100014              195         196
+    phase shifts for unique potential    0
+    phase shifts for unique potential    1
+    phase shifts for unique potential    2
+    phase shifts for unique potential    3
+Done with module: cross-section and phases (XSPH).
+
+FMS calculation of full Green's function ...
+FEFF-serial using 1 thread.
+Using   194 energy points.
+xprep done
+FMS for a cluster of  236 atoms
+Energy point    1/ 194
+Energy point   10/ 194
+Energy point   20/ 194
+Energy point   30/ 194
+Energy point   40/ 194
+Energy point   50/ 194
+Energy point   60/ 194
+Energy point   70/ 194
+Energy point   80/ 194
+Energy point   90/ 194
+Energy point  100/ 194
+Energy point  110/ 194
+Energy point  120/ 194
+Energy point  130/ 194
+Energy point  140/ 194
+Energy point  150/ 194
+Energy point  160/ 194
+Energy point  170/ 194
+Energy point  180/ 194
+Energy point  190/ 194
+Done with module: FMS.
+
+MKGTR: Tracing over Green's function ...
+Done with module: MKGTR.
+
+Pathfinder: finding scattering paths...
+Preparing plane wave scattering amplitudes
+Searching for paths
+Eliminating path degeneracies
+0 paths retained.
+Done with module: pathfinder.
+
+Calculating EXAFS parameters ...
+Done with module: EXAFS parameters (GENFMT).
+
+Calculating XAS spectra ...
+Done with module: XAS spectra (FF2X: DW + final sum over paths).
+
+ 
+### feff ends at Mon Aug 14 04:11:14 EDT 2023
+ 

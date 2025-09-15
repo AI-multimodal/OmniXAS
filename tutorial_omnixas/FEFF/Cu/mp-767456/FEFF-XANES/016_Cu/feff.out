@@ -1,0 +1,247 @@
+### feff starts at Mon Aug 14 07:41:20 EDT 2023
+### Serial version
+### FeffPath is /sdcc/u/mcarbone/software/JFEFF/hsw/feff90/linux
+ 
+Launching FEFF version FEFF 9.9.1
+Resetting lmaxsc to 2 for iph =    2.  Use  UNFREEZE to prevent this.
+Core hole lifetime is   1.729 eV.
+Your calculation:
+ comment: None given
+ Source:
+ Structure Summary:  Li6 Ta10 Cu4 O30
+ Reduced formula:  Li3Ta5Cu2O15
+ space group: (R3), space number:  (146)
+ abc: 23.623627  23.623627  23.623626
+ angles: 12.698221  12.698221  12.698221
+ sites: 50
+Cu K edge XANES using RPA corehole.
+Using:     * Self-Consistent Field potentials
+Using cards:   ATOMS CONTROL EXCHANGE TITLE RPATH POTENTIALS XANES EDGE SCF FMS S02 COREHOLE EGRID
+
+Calculating atomic potentials ...
+    overlapped atomic potential and density for unique potential    0
+    overlapped atomic potential and density for unique potential    1
+    overlapped atomic potential and density for unique potential    2
+    overlapped atomic potential and density for unique potential    3
+    overlapped atomic potential and density for unique potential    4
+Done with module: atomic potentials.
+
+Calculating SCF potentials ...
+FEFF-serial using 1 thread.
+Muffin tin radii and interstitial parameters [bohr]:
+type, norman radius, muffin tin, overlap factor
+    0  1.38131E+00  1.30961E+00  1.14645E+00
+    1  1.34531E+00  1.28830E+00  1.11514E+00
+    2  1.46177E+00  1.31806E+00  1.15000E+00
+    3  1.38146E+00  1.30973E+00  1.14650E+00
+    4  1.07491E+00  9.92016E-01  1.15000E+00
+Core-valence separation energy:  ecv=   -33.500 eV
+Initial Fermi level:              mu=     2.509 eV
+SCF ITERATION NUMBER  1
+     point #   1  energy = -33.500
+FMS for a cluster of  136 atoms around atom type   0
+FMS for a cluster of  119 atoms around atom type   1
+FMS for a cluster of  121 atoms around atom type   2
+FMS for a cluster of   96 atoms around atom type   3
+FMS for a cluster of  124 atoms around atom type   4
+     point #  20  energy = -22.461
+     point #  40  energy =  -6.576
+     point #  60  energy =  -5.382
+New Fermi level:    mu=  -4.879 eV  Charge distance=  1.2911 (partial c.d.=  4.9091)
+negative density   1  -97.726 - usually harmless precision error, but check DOS if it persists
+SCF ITERATION NUMBER  1
+     point #   1  energy = -33.500
+FMS for a cluster of  136 atoms around atom type   0
+FMS for a cluster of  119 atoms around atom type   1
+FMS for a cluster of  121 atoms around atom type   2
+FMS for a cluster of   96 atoms around atom type   3
+FMS for a cluster of  124 atoms around atom type   4
+     point #  20  energy = -22.256
+     point #  40  energy =  -4.879
+     point #  60  energy =  -5.048
+     point #  80  energy =  -6.692
+     point # 100  energy =  -5.904
+     point # 120  energy =  -5.651
+New Fermi level:    mu=  -5.555 eV  Charge distance=  0.5465 (partial c.d.=  6.8279)
+negative density   1 -281.547 - usually harmless precision error, but check DOS if it persists
+SCF ITERATION NUMBER  1
+     point #   1  energy = -33.500
+FMS for a cluster of  136 atoms around atom type   0
+FMS for a cluster of  119 atoms around atom type   1
+FMS for a cluster of  121 atoms around atom type   2
+FMS for a cluster of   96 atoms around atom type   3
+FMS for a cluster of  124 atoms around atom type   4
+     point #  20  energy = -22.522
+     point #  40  energy =  -5.555
+     point #  60  energy =  -5.643
+New Fermi level:    mu=  -5.699 eV  Charge distance=  0.2614 (partial c.d.=  0.5515)
+negative density   1 -424.016 - usually harmless precision error, but check DOS if it persists
+negative density   1   -7.625 - usually harmless precision error, but check DOS if it persists
+SCF ITERATION NUMBER  2
+     point #   1  energy = -33.500
+     point #  20  energy = -22.174
+     point #  40  energy =  -5.699
+New Fermi level:    mu=  -5.770 eV  Charge distance=  0.2607 (partial c.d.=  0.2711)
+negative density   1 -734.728 - usually harmless precision error, but check DOS if it persists
+negative density   1 -103.375 - usually harmless precision error, but check DOS if it persists
+SCF ITERATION NUMBER  3
+     point #   1  energy = -33.500
+     point #  20  energy = -22.203
+     point #  40  energy =  -5.770
+New Fermi level:    mu=  -5.708 eV  Charge distance=  0.1784 (partial c.d.=  0.8942)
+negative density   1 -810.729 - usually harmless precision error, but check DOS if it persists
+negative density   1 -126.901 - usually harmless precision error, but check DOS if it persists
+SCF ITERATION NUMBER  4
+     point #   1  energy = -33.500
+     point #  20  energy = -22.177
+     point #  40  energy =  -5.708
+New Fermi level:    mu=  -5.721 eV  Charge distance=  0.0683 (partial c.d.=  0.9663)
+negative density   1 -937.456 - usually harmless precision error, but check DOS if it persists
+negative density   1 -166.077 - usually harmless precision error, but check DOS if it persists
+SCF ITERATION NUMBER  5
+     point #   1  energy = -33.500
+     point #  20  energy = -22.183
+     point #  40  energy =  -5.721
+New Fermi level:    mu=  -5.715 eV  Charge distance=  0.0632 (partial c.d.=  0.0807)
+negative density   1-1021.286 - usually harmless precision error, but check DOS if it persists
+negative density   1 -192.175 - usually harmless precision error, but check DOS if it persists
+SCF ITERATION NUMBER  6
+     point #   1  energy = -33.500
+     point #  20  energy = -22.180
+     point #  40  energy =  -5.715
+New Fermi level:    mu=  -5.708 eV  Charge distance=  0.0015 (partial c.d.=  0.1540)
+negative density   1-1026.523 - usually harmless precision error, but check DOS if it persists
+negative density   1 -193.943 - usually harmless precision error, but check DOS if it persists
+SCF ITERATION NUMBER  7
+     point #   1  energy = -33.500
+     point #  20  energy = -22.177
+     point #  40  energy =  -5.708
+New Fermi level:    mu=  -5.704 eV  Charge distance=  0.0037 (partial c.d.=  0.0074)
+negative density   1-1040.695 - usually harmless precision error, but check DOS if it persists
+negative density   1 -198.627 - usually harmless precision error, but check DOS if it persists
+SCF ITERATION NUMBER  8
+     point #   1  energy = -33.500
+     point #  20  energy = -22.176
+     point #  40  energy =  -5.704
+New Fermi level:    mu=  -5.698 eV  Charge distance=  0.0028 (partial c.d.=  0.0047)
+negative density   1-1050.209 - usually harmless precision error, but check DOS if it persists
+negative density   1 -201.760 - usually harmless precision error, but check DOS if it persists
+SCF ITERATION NUMBER  9
+     point #   1  energy = -33.500
+     point #  20  energy = -22.173
+     point #  40  energy =  -5.698
+New Fermi level:    mu=  -5.695 eV  Charge distance=  0.0007 (partial c.d.=  0.0005)
+negative density   1-1053.525 - usually harmless precision error, but check DOS if it persists
+negative density   1 -202.853 - usually harmless precision error, but check DOS if it persists
+SCF ITERATION NUMBER 10
+     point #   1  energy = -33.500
+     point #  20  energy = -22.172
+     point #  40  energy =  -5.695
+New Fermi level:    mu=  -5.695 eV  Charge distance=  0.0001 (partial c.d.=  0.0004)
+negative density   1-1053.808 - usually harmless precision error, but check DOS if it persists
+negative density   1 -202.948 - usually harmless precision error, but check DOS if it persists
+SCF ITERATION NUMBER 11
+     point #   1  energy = -33.500
+     point #  20  energy = -22.172
+     point #  40  energy =  -5.695
+New Fermi level:    mu=  -5.695 eV  Charge distance=  0.0002 (partial c.d.=  0.0001)
+Electronic configuration
+  type     l     N_el
+     0     0    0.551
+     0     1    0.531
+     0     2    9.645
+     0     3    0.000
+     1     0    0.250
+     1     1    0.512
+     1     2    0.000
+     1     3    0.000
+     2     0    0.528
+     2     1    0.859
+     2     2    2.966
+     2     3    0.000
+     3     0    0.540
+     3     1    0.546
+     3     2    9.648
+     3     3    0.000
+     4     0    1.805
+     4     1    4.422
+     4     2    0.072
+     4     3    0.000
+Charge transfer:  type  charge
+       0   -0.273
+       1   -0.238
+       2   -0.647
+       3   -0.266
+       4    0.299
+Convergence reached in   11 iterations.
+Done with module: potentials.
+
+Calculating screened core-hole potential ...
+FMS for a cluster of   24 atoms around iph =   0
+    0% of energy integration
+   20%
+   40%
+   60%
+   80%
+  100%
+Preparing response function.
+Computing (1 - K Chi0)^-1 v_ch
+Done with module: screened core-hole potential.
+
+Calculating cross-section and phases ...
+    absorption cross section
+ x0,dx,rnrm,inrm,jnrm   8.80000000000000       5.000000000000000E-002
+   2.61029363099991              196         197
+    phase shifts for unique potential    0
+    phase shifts for unique potential    1
+    phase shifts for unique potential    2
+    phase shifts for unique potential    3
+    phase shifts for unique potential    4
+Done with module: cross-section and phases (XSPH).
+
+FMS calculation of full Green's function ...
+FEFF-serial using 1 thread.
+Using   194 energy points.
+xprep done
+FMS for a cluster of  260 atoms
+Energy point    1/ 194
+Energy point   10/ 194
+Energy point   20/ 194
+Energy point   30/ 194
+Energy point   40/ 194
+Energy point   50/ 194
+Energy point   60/ 194
+Energy point   70/ 194
+Energy point   80/ 194
+Energy point   90/ 194
+Energy point  100/ 194
+Energy point  110/ 194
+Energy point  120/ 194
+Energy point  130/ 194
+Energy point  140/ 194
+Energy point  150/ 194
+Energy point  160/ 194
+Energy point  170/ 194
+Energy point  180/ 194
+Energy point  190/ 194
+Done with module: FMS.
+
+MKGTR: Tracing over Green's function ...
+Done with module: MKGTR.
+
+Pathfinder: finding scattering paths...
+Preparing plane wave scattering amplitudes
+Searching for paths
+Eliminating path degeneracies
+0 paths retained.
+Done with module: pathfinder.
+
+Calculating EXAFS parameters ...
+Done with module: EXAFS parameters (GENFMT).
+
+Calculating XAS spectra ...
+Done with module: XAS spectra (FF2X: DW + final sum over paths).
+
+ 
+### feff ends at Mon Aug 14 09:17:43 EDT 2023
+ 
