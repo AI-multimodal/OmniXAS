@@ -1,7 +1,0 @@
-POTENTIALS 
-  *ipot    Z  tag      lmax1    lmax2    xnatph(stoichometry)    spinph
-******-  **-  ****-  ******-  ******-  **********************  ********
-      0   29  Cu          -1       -1                  0.0001         0
-      1   15  P           -1       -1                  2              0
-      2   16  S           -1       -1                  6              0
-      3   23  V           -1       -1                  1              0
