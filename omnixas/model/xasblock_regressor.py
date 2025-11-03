@@ -29,7 +29,7 @@ class XASBlockRegressorConfig(BaseModel):
     output_dim: int = 200
     hidden_dims: List[int] = [100]
     initial_lr: float = 1e-2
-    min_lr: float 1e-8
+    min_lr: float = 1e-8
     batch_size: int = 128
 
     # Training params
