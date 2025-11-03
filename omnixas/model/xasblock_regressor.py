@@ -66,7 +66,7 @@ class XASBlockRegressorConfig(BaseModel):
             shutil.rmtree(self.save_dir)
         os.makedirs(self.save_dir, exist_ok=True)
         return [
-            LearningRateFinder(min_lr=min_lr),
+            LearningRateFinder(min_lr=self.min_lr),
             TensorboardLogTestTrainLoss(),
             EarlyStopping(
                 monitor="val_loss",
