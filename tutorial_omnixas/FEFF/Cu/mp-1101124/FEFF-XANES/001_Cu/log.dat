@@ -1,0 +1,15 @@
+Launching FEFF version FEFF 9.9.1
+Core hole lifetime is   1.729 eV.
+Your calculation:
+ comment: None given
+ Source:
+ Structure Summary:  Ti1 Cu3 O4
+ Reduced formula:  TiCu3O4
+ space group: (P-3m1), space number:  (164)
+ abc: 11.278452  11.278452  10.626766
+ angles: 90.000000  90.000000 120.000000
+ sites: 8
+Cu K edge XANES using RPA corehole.
+Using:     * Self-Consistent Field potentials
+Using cards:   ATOMS CONTROL EXCHANGE TITLE RPATH POTENTIALS XANES EDGE SCF FMS S02 COREHOLE EGRID
+

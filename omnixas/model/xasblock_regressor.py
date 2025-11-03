@@ -29,6 +29,7 @@ class XASBlockRegressorConfig(BaseModel):
     output_dim: int = 200
     hidden_dims: List[int] = [100]
     initial_lr: float = 1e-2
+    min_lr: float = 1e-8
     batch_size: int = 128
 
     # Training params
@@ -65,7 +66,7 @@ class XASBlockRegressorConfig(BaseModel):
             shutil.rmtree(self.save_dir)
         os.makedirs(self.save_dir, exist_ok=True)
         return [
-            LearningRateFinder(),
+            LearningRateFinder(min_lr=self.min_lr),
             TensorboardLogTestTrainLoss(),
             EarlyStopping(
                 monitor="val_loss",
